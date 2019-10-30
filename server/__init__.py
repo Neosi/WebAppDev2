@@ -1,5 +1,5 @@
 from flask import Flask
-from server.entities import db
+from server.views import *
 from pony.flask import Pony
 
 app = Flask(__name__)
