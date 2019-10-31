@@ -1,9 +1,7 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
 }
 
 .App-header {
@@ -19,4 +17,9 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+.content{
+  background-color: #ffffff;
+  padding: 24px;
 }
