@@ -15,13 +15,29 @@ function App() {
           <Heading/>
           <Layout>
             <Sidebar/>
-            <Layout style={{ padding: "0 24px 24px" }}>
-              <Breadcrumb style={{ margin: "16px 0" }}>
-                <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item>List</Breadcrumb.Item>
-                <Breadcrumb.Item>App</Breadcrumb.Item>
-              </Breadcrumb>
-              <Content className="content">Content</Content>
+            <Layout style={{ padding: "24px 24px 24px" }}>
+              <Content className="content">
+                <Switch>
+                  <Route path="/characters">
+                    CHARACTERS
+                  </Route>
+                  <Route path="/races">
+                    RACES
+                  </Route>
+                  <Route path="/personality">
+                    PERSONALITY
+                  </Route>
+                  <Route path="/tags">
+                    TAGS
+                  </Route>
+                  <Route path="/relationships">
+                    RELATIONSHIPS
+                  </Route>
+                  <Route path="/">
+                    HOME
+                  </Route>
+                </Switch>
+              </Content>
             </Layout>
           </Layout>
         </Layout>
