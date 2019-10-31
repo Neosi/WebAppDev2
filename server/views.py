@@ -19,8 +19,7 @@ def remove_character():
 
 @app.route('/get-characters', methods=['GET'])
 def get_characters():
-    list = []
-    query = select(c for c in Character)
-    for q in query:
-        list.append(q.to_dict())
-    return json.dumps(list)
+    characters = select(c for c in Character)
+    result = [c.to_dict() for c in characters]
+    print(result)
+    return json.dumps(result)
