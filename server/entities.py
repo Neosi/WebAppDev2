@@ -51,6 +51,8 @@ class Character(db.Entity):
     flaws = Set(Flaw)
     traits = Set(Trait)
     tags = Set('Tag')
+    background = Optional(str)
+    appearance = Optional(str)
 
 class Tag(db.Entity):
     id = PrimaryKey(int, auto=True)
