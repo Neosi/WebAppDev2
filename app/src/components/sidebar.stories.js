@@ -17,7 +17,7 @@ export const Sidebar = () => (
       style={{ height: "100%", borderRight: 0 }}
     >
       <Menu.Item key="1">
-        <Link to="/characters">Home</Link>
+        <Link to="/">Home</Link>
       </Menu.Item>
       <Menu.Item key="2">
         <Link to="/characters">Characters</Link>
@@ -31,8 +31,8 @@ export const Sidebar = () => (
           </span>
         }
       >
-        <Menu.Item key="3">Races</Menu.Item>
-        <Menu.Item key="4">Personality</Menu.Item>
+        <Menu.Item key="3"><Link to="/races">Races</Link></Menu.Item>
+        <Menu.Item key="4"><Link to="/personality">Personality</Link></Menu.Item>
       </SubMenu>
       <SubMenu
         key="sub3"
@@ -43,8 +43,8 @@ export const Sidebar = () => (
           </span>
         }
       >
-        <Menu.Item key="5">Tags</Menu.Item>
-        <Menu.Item key="6">Relationships</Menu.Item>
+        <Menu.Item key="5"><Link to="/tags">Tags</Link></Menu.Item>
+        <Menu.Item key="6"><Link to="/relationships">Relationships</Link></Menu.Item>
       </SubMenu>
     </Menu>
   </Sider>
