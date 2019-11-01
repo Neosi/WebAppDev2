@@ -1,7 +1,9 @@
 import React from "react";
-import { Table, Divider, Icon, Form, Input, Button, Row, Col } from "antd";
-import axios from "axios";
+import { Table, Divider, Icon, Form, Input, Button, Row, Col, Typography } from "antd";
+import { createCharacter, removeCharacter, getCharacters } from "../API";
 export default { title: "Characters" };
+
+const { Title } = Typography;
 
 export class CharacterPage extends React.PureComponent {
   constructor() {
@@ -9,26 +11,12 @@ export class CharacterPage extends React.PureComponent {
     this.state = { characters: [], hasData: false };
   }
 
-  async removeCharacter(id) {
-    await axios.post("http://127.0.0.1:5000/remove-character", { id });
-    this.init();
+  componentDidMount() {
+    getCharacters.bind(this)();
   }
 
-  async createCharacter(name) {
-    await axios.post("http://127.0.0.1:5000/add-character", name);
-    this.init();
-  }
-  componentDidMount() {
-    this.init();
-  }
   init() {
-    axios
-      .get("http://127.0.0.1:5000/get-characters")
-      .then(response => {
-        this.setState({ characters: response.data, hasData: true });
-        console.log("SETTING STATE" + JSON.stringify(response.data));
-      })
-      .catch(error => console.log(error));
+    getCharacters.bind(this)();
   }
 
   render() {
@@ -36,9 +24,7 @@ export class CharacterPage extends React.PureComponent {
       <div>
         <Row>
           <Col span={12}>
-            <WrappedCreateCharacterForm
-              init={this.createCharacter.bind(this)}
-            />
+            <WrappedCreateCharacterForm create={createCharacter.bind(this)} />
           </Col>
           <Col span={12}>
             <CharacterStats />
@@ -47,7 +33,7 @@ export class CharacterPage extends React.PureComponent {
         <CharacterTable
           characters={this.state.characters}
           hasData={this.state.hasData}
-          remove={this.removeCharacter.bind(this)}
+          remove={removeCharacter.bind(this)}
         />
       </div>
     );
@@ -130,14 +116,14 @@ export class CharacterTable extends React.PureComponent {
   }
 }
 
-const CharacterStats = () => <div>Charcter stats</div>;
+const CharacterStats = () => <div><Title level={4}>Charcter stats</Title></div>;
 
 class CreateCharacterForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.init(values);
+        this.props.create(values);
       }
     });
   };
