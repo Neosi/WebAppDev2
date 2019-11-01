@@ -50,7 +50,7 @@ const columns = [
 export class CharacterTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { characters: null, selectedRowKeys: [] };
+    this.state = { characters: null, selectedRowKeys: [], hasData: false };
   }
 
   onSelectChange = selectedRowKeys => {
@@ -62,8 +62,7 @@ export class CharacterTable extends React.Component {
     axios
       .get("http://127.0.0.1:5000/get-characters")
       .then(response => {
-        console.log(response.data);
-        this.setState({ characters: response.data });
+        this.setState({ characters: response.data, hasData: true });
       })
       .catch(error => console.log(error));
   }
@@ -77,6 +76,7 @@ export class CharacterTable extends React.Component {
     };
     return (
       <Table
+        loading={!this.state.hasData}
         rowSelection={rowSelection}
         rowKey="id"
         dataSource={this.state.characters || null}
