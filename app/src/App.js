@@ -4,14 +4,14 @@ import "./App.css";
 import { Layout } from "antd";
 import { Sidebar } from "./components/sidebar.stories";
 import { Heading } from "./components/header.stories";
-import { CharacterTable } from "./components/character";
+import { CharacterPage } from "./components/character";
 const { Content } = Layout;
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Layout style={{ height: "100vh" }}>
+        <Layout style={{ minHeight: "100vh" }}>
           <Heading />
           <Layout>
             <Sidebar />
@@ -19,7 +19,7 @@ function App() {
               <Content className="content">
                 <Switch>
                   <Route path="/characters">
-                    <CharacterTable />
+                    <CharacterPage/>
                   </Route>
                   <Route path="/races">RACES</Route>
                   <Route path="/personality">PERSONALITY</Route>
