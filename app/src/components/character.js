@@ -3,45 +3,51 @@ import { Table, Divider, Icon, Form, Input, Button, Row, Col } from "antd";
 import axios from "axios";
 export default { title: "Characters" };
 
-function createCharacter(values) {
-  axios.post("http://127.0.0.1:5000/add-character", values);
-}
-function removeCharacter(id) {
-  axios.post("http://127.0.0.1:5000/remove-character", { id });
-}
 export class CharacterPage extends React.PureComponent {
   constructor() {
     super();
     this.state = { characters: [], hasData: false };
   }
 
+  async removeCharacter(id) {
+    await axios.post("http://127.0.0.1:5000/remove-character", { id });
+    this.init();
+  }
+
+  async createCharacter(name) {
+    await axios.post("http://127.0.0.1:5000/add-character", name);
+    this.init();
+  }
   componentDidMount() {
     this.init();
   }
-  init = () => {
+  init() {
     axios
       .get("http://127.0.0.1:5000/get-characters")
       .then(response => {
         this.setState({ characters: response.data, hasData: true });
+        console.log("SETTING STATE" + JSON.stringify(response.data));
       })
       .catch(error => console.log(error));
-  };
+  }
 
   render() {
     return (
       <div>
         <Row>
           <Col span={12}>
-            <WrappedCreateCharacterForm init={this.init} />
+            <WrappedCreateCharacterForm
+              init={this.createCharacter.bind(this)}
+            />
           </Col>
           <Col span={12}>
             <CharacterStats />
           </Col>
         </Row>
-        <Button onClick={this.init}>REFRESH</Button>
         <CharacterTable
           characters={this.state.characters}
           hasData={this.state.hasData}
+          remove={this.removeCharacter.bind(this)}
         />
       </div>
     );
@@ -86,7 +92,7 @@ export class CharacterTable extends React.PureComponent {
           <span>
             <a>View</a>
             <Divider type="vertical" />
-            <a onClick={() => removeCharacter(record.id)}>Delete</a>
+            <a onClick={() => this.props.remove(record.id)}>Delete</a>
             <Divider type="vertical" />
             <a className="ant-dropdown-link">
               More actions <Icon type="down" />
@@ -131,9 +137,7 @@ class CreateCharacterForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-        createCharacter(values);
-        this.props.init.bind(this);
+        this.props.init(values);
       }
     });
   };
@@ -141,14 +145,18 @@ class CreateCharacterForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form" layout="inline">
+      <Form
+        onSubmit={this.handleSubmit}
+        className="character-form"
+        layout="inline"
+      >
         <Form.Item>
           {getFieldDecorator("name", {
-            rules: [{ required: true, message: "Please input your username!" }]
+            rules: [{ required: true, message: "Input character name!" }]
           })(
             <Input
               prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="Username"
+              placeholder="Name"
             />
           )}
         </Form.Item>
