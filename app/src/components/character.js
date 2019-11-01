@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "antd";
+import { Table, Divider, Icon } from "antd";
 import axios from "axios";
 export default { title: "Characters" };
 
@@ -30,36 +30,67 @@ const columns = [
     key: "race"
   },
   {
-    title: "Allignment",
-    dataIndex: "allignment",
-    key: "allignment"
+    title: "Actions",
+    dataIndex: "actions",
+    key: "actions",
+    render: (text, record) => (
+      <span>
+        <a>View</a>
+        <Divider type="vertical" />
+        <a>Delete</a>
+        <Divider type="vertical" />
+        <a className="ant-dropdown-link">
+          More actions <Icon type="down" />
+        </a>
+      </span>
+    )
   }
 ];
 
 export class CharacterTable extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { characters: null };
+    this.state = { characters: null, selectedRowKeys: [] };
   }
+
+  onSelectChange = selectedRowKeys => {
+    console.log("selectedRowKeys changed: ", selectedRowKeys);
+    this.setState({ selectedRowKeys });
+  };
 
   componentDidMount() {
     axios
       .get("http://127.0.0.1:5000/get-characters")
       .then(response => {
-        console.log(response.data)
+        console.log(response.data);
         this.setState({ characters: response.data });
       })
       .catch(error => console.log(error));
   }
 
   render() {
+    const { selectedRowKeys } = this.state;
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: this.onSelectChange,
+      hideDefaultSelections: true
+    };
     return (
       <Table
+        rowSelection={rowSelection}
         rowKey="id"
         dataSource={this.state.characters || null}
         columns={columns}
         expandedRowRender={record => (
-          <p style={{ margin: 0 }}>Background:{record.background} Appearance: {record.appearance}</p>
+          <div>
+            Allignment: {record.allignment} 
+            <Divider type="vertical" />
+            Age: {record.age}
+            <Divider type="vertical" />
+            Background:{record.background}
+            <Divider type="vertical" />
+            Appearance: {record.appearance}
+          </div>
         )}
       />
     );
