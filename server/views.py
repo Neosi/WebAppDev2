@@ -1,10 +1,12 @@
 from flask import request
 from server import app
-from server.entities import Character
+from server.entities import Character, Race
 from pony.orm import select
 import json
 
+# ------------------------------------------
 # Character Routes
+# ------------------------------------------
 @app.route('/add-character', methods=['POST'])
 def add_character():
     name = request.json.get('name')
@@ -23,3 +25,25 @@ def get_characters():
     result = [c.to_dict() for c in characters]
     print(result)
     return json.dumps(result)
+
+# ------------------------------------------
+# Race Routes
+# ------------------------------------------
+@app.route('/get-races', methods=['GET'])
+def get_races():
+    races = select(r for r in Character)
+    result = [r.to_dict() for r in races]
+    print(result)
+    return json.dumps(result)
+
+@app.route('/add-race', methods=['POST'])
+def add_race():
+    name = request.json.get('name')
+    Character(name=name)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route('/remove-race', methods=['POST'])
+def remove_race():
+    id = request.json.get('id')
+    Race[id].delete()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
