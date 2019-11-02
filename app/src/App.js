@@ -23,6 +23,7 @@ function App() {
                     <CharacterPage/>
                   </Route>
                   <Route path="/races"><RacePage/></Route>
+                  <Route path="/class">Class</Route>
                   <Route path="/personality">PERSONALITY</Route>
                   <Route path="/tags">TAGS</Route>
                   <Route path="/relationships">RELATIONSHIPS</Route>

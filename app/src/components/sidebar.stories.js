@@ -38,6 +38,9 @@ export const Sidebar = () => (
           <Link to="/races">Races</Link>
         </Menu.Item>
         <Menu.Item key="4">
+          <Link to="/class">Class</Link>
+        </Menu.Item>
+        <Menu.Item key="5">
           <Link to="/personality">Personality</Link>
         </Menu.Item>
       </SubMenu>
@@ -50,10 +53,10 @@ export const Sidebar = () => (
           </span>
         }
       >
-        <Menu.Item key="5">
+        <Menu.Item key="6">
           <Link to="/tags">Tags</Link>
         </Menu.Item>
-        <Menu.Item key="6">
+        <Menu.Item key="7">
           <Link to="/relationships">Relationships</Link>
         </Menu.Item>
       </SubMenu>
