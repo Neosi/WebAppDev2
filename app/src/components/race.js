@@ -81,12 +81,12 @@ class RaceForm extends React.PureComponent {
     return (
       <Form onSubmit={this.handleSubmit} layout="inline">
         <Form.Item>
-          {getFieldDecorator("race", {
+          {getFieldDecorator("name", {
             rules: [{ required: true, message: "Input race name!" }]
           })(
             <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="race"
+              prefix={<Icon type="team" style={{ color: "rgba(0,0,0,.25)" }} />}
+              placeholder="Race"
             />
           )}
         </Form.Item>
