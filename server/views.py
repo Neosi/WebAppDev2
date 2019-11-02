@@ -31,7 +31,7 @@ def get_characters():
 # ------------------------------------------
 @app.route('/get-races', methods=['GET'])
 def get_races():
-    races = select(r for r in Character)
+    races = select(r for r in Race)
     result = [r.to_dict() for r in races]
     print(result)
     return json.dumps(result)
@@ -39,7 +39,7 @@ def get_races():
 @app.route('/add-race', methods=['POST'])
 def add_race():
     name = request.json.get('name')
-    Character(name=name)
+    Race(name=name)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-race', methods=['POST'])

@@ -1,5 +1,15 @@
 import React from "react";
-import { Table, Divider, Icon, Form, Input, Button, Row, Col, Typography } from "antd";
+import {
+  Table,
+  Divider,
+  Icon,
+  Form,
+  Input,
+  Button,
+  Row,
+  Col,
+  Typography
+} from "antd";
 import { createCharacter, removeCharacter, getCharacters } from "../API";
 export default { title: "Characters" };
 
@@ -40,7 +50,7 @@ export class CharacterPage extends React.PureComponent {
   }
 }
 
-export class CharacterTable extends React.PureComponent {
+class CharacterTable extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +59,6 @@ export class CharacterTable extends React.PureComponent {
   }
 
   onSelectChange = selectedRowKeys => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
@@ -116,9 +125,13 @@ export class CharacterTable extends React.PureComponent {
   }
 }
 
-const CharacterStats = () => <div><Title level={4}>Charcter stats</Title></div>;
+const CharacterStats = () => (
+  <div>
+    <Title level={4}>Charcter stats</Title>
+  </div>
+);
 
-class CreateCharacterForm extends React.Component {
+class CreateCharacterForm extends React.PureComponent {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -131,11 +144,7 @@ class CreateCharacterForm extends React.Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     return (
-      <Form
-        onSubmit={this.handleSubmit}
-        className="character-form"
-        layout="inline"
-      >
+      <Form onSubmit={this.handleSubmit} layout="inline">
         <Form.Item>
           {getFieldDecorator("name", {
             rules: [{ required: true, message: "Input character name!" }]
@@ -147,12 +156,8 @@ class CreateCharacterForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="create-character-button"
-          >
-            Create Character
+          <Button type="primary" htmlType="submit">
+            Quick Add
           </Button>
         </Form.Item>
       </Form>
