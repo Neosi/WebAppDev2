@@ -3,7 +3,7 @@ from pony.orm import Database, Required, Optional, PrimaryKey, Set
 db = Database()
 db.bind(provider='sqlite', filename='database.db', create_db=True)
 
-class Class(db.Entity):
+class CharClass(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Optional(str)
     characters = Set('Character')
@@ -43,7 +43,7 @@ class Character(db.Entity):
     name = Optional(str)
     age = Optional(int)
     affiliations = Set("Character", reverse='affiliations')
-    character_class = Optional(Class)
+    character_class = Optional(CharClass)
     race = Optional(Race)
     allignment = Optional(Allignment)
     ideals = Set(Ideal)

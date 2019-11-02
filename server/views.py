@@ -1,6 +1,6 @@
 from flask import request
 from server import app
-from server.entities import Character, Race
+from server.entities import Character, Race, CharClass
 from pony.orm import select
 import json
 
@@ -23,7 +23,11 @@ def remove_character():
 def get_characters():
     characters = select(c for c in Character)
     result = [c.to_dict() for c in characters]
-    print(result)
+    for r in result:
+        if r["race"] is not None:
+            r["race"] = Race[r["race"]].name
+        if r["character_class"] is not None:
+            r["character_class"] = Race[r["character_class"]].name
     return json.dumps(result)
 
 # ------------------------------------------
@@ -46,4 +50,26 @@ def add_race():
 def remove_race():
     id = request.json.get('id')
     Race[id].delete()
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+# ------------------------------------------
+# Class Routes
+# ------------------------------------------
+@app.route('/get-classes', methods=['GET'])
+def get_classes():
+    classes = select(c for c in CharClass)
+    result = [c.to_dict() for c in classes]
+    print(result)
+    return json.dumps(result)
+
+@app.route('/add-class', methods=['POST'])
+def add_class():
+    name = request.json.get('name')
+    CharClass(name=name)
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
+@app.route('/remove-class', methods=['POST'])
+def remove_class():
+    id = request.json.get('id')
+    CharClass[id].delete()
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
