@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Divider, Icon, Form, Input, Button } from "antd";
-import { removeRace, createRace, getRaces } from "../API";
+import { removeRace, createRace, getRaces } from "../requests";
 
 export default class RacePage extends React.PureComponent {
   constructor() {
@@ -9,21 +9,32 @@ export default class RacePage extends React.PureComponent {
   }
 
   componentDidMount() {
-    getRaces.bind(this)();
+    this.init();
   }
 
   init() {
-    getRaces.bind(this)();
+    getRaces().then(data =>{
+      this.setState({ races: data});
+    });
+  }
+
+  async add(name){
+    await createRace(name);
+    this.init();
+  }
+  async remove(id){
+    await removeRace(id);
+    this.init();
   }
 
   render() {
     return (
       <div>
-        <WrappedRaceForm create={createRace.bind(this)} />
+        <WrappedRaceForm create={(name) => this.add(name)} />
         <RaceTable
           races={this.state.races}
           hasData={this.state.hasData}
-          remove={removeRace.bind(this)}
+          remove={(id) => this.remove(id)}
         ></RaceTable>
       </div>
     );

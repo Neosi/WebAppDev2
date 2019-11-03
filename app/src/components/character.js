@@ -8,9 +8,17 @@ import {
   Button,
   Row,
   Col,
-  Typography
+  Typography,
+  AutoComplete
 } from "antd";
-import { createCharacter, removeCharacter, getCharacters } from "../API";
+import {
+  createCharacter,
+  removeCharacter,
+  getCharacters,
+  getRaceNames,
+  getRace
+} from "../requests";
+import _default from "antd/lib/date-picker";
 export default { title: "Characters" };
 
 const { Title } = Typography;
@@ -18,32 +26,50 @@ const { Title } = Typography;
 export class CharacterPage extends React.PureComponent {
   constructor() {
     super();
-    this.state = { characters: [], hasData: false };
+    this.state = { characters: [], races: [], hasData: false };
   }
 
   componentDidMount() {
-    getCharacters.bind(this)();
+    getCharacters().then(data => {
+      this.setState({ characters: data, hasData: true });
+    });
+    getRaceNames().then(data => {
+      this.setState({ races: data });
+    });
   }
 
   init() {
-    getCharacters.bind(this)();
+    getCharacters().then(data => {
+      this.setState({ characters: data });
+    });
   }
 
+  async create(data) {
+    await createCharacter(data).then(() => {
+      this.init();
+    });
+  }
+
+  async remove(id) {
+    await removeCharacter(id).then(() => {
+      this.init();
+    });
+  }
   render() {
     return (
       <div>
         <Row>
-          <Col span={12}>
-            <WrappedCreateCharacterForm create={createCharacter.bind(this)} />
-          </Col>
-          <Col span={12}>
-            <CharacterStats />
+          <Col span={24}>
+            <WrapFullForm
+              races={this.state.races}
+              create={data => this.create(data)}
+            />
           </Col>
         </Row>
         <CharacterTable
           characters={this.state.characters}
           hasData={this.state.hasData}
-          remove={removeCharacter.bind(this)}
+          remove={id => this.remove(id)}
         />
       </div>
     );
@@ -125,13 +151,14 @@ class CharacterTable extends React.PureComponent {
   }
 }
 
-const CharacterStats = () => (
-  <div>
-    <Title level={4}>Charcter stats</Title>
-  </div>
-);
+const matchText = (inputValue, option) =>
+  option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
 
-class CreateCharacterForm extends React.PureComponent {
+class FullForm extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -145,26 +172,56 @@ class CreateCharacterForm extends React.PureComponent {
     const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} layout="inline">
-        <Form.Item>
-          {getFieldDecorator("name", {
-            rules: [{ required: true, message: "Input character name!" }]
-          })(
-            <Input
-              prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-              placeholder="Name"
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Quick Add
-          </Button>
-        </Form.Item>
+        <Row>
+          <Col span={12} style={{ left: 0 }}>
+            <Form.Item label="Name">
+              {getFieldDecorator("name")(<Input />)}
+            </Form.Item>
+          </Col>
+          <Col span={12} style={{ left: 0 }}>
+            <Form.Item label="Age">
+              {getFieldDecorator("age")(<Input />)}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12} style={{ left: 0 }}>
+            <Form.Item label="Class">
+              {getFieldDecorator("character-class")(<Input />)}
+            </Form.Item>
+          </Col>
+          <Col span={12} style={{ left: 0 }}>
+            <Form.Item label="Race">
+              {getFieldDecorator("race")(
+                <AutoComplete
+                  style={{ left: 0 }}
+                  dataSource={this.props.races}
+                  placeholder={this.props.placeholder}
+                  filterOption={matchText}
+                />
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12} />
+          <Col span={12}>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: "14pc" }}
+              >
+                Quick Add
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     );
   }
 }
 
-export const WrappedCreateCharacterForm = Form.create({
+export const WrapFullForm = Form.create({
   name: "create-character"
-})(CreateCharacterForm);
+})(FullForm);
