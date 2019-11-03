@@ -10,13 +10,7 @@ export async function removeCharacter(id) {
 }
 
 export async function createCharacter(data) {
-  await getRace(data.race).then(response =>{
-    console.log(data.race);
-    data.race = response[0];
-    
-    return axios.post(`${url}/add-character`, data);
-  });
-  
+  return await axios.post(`${url}/add-character`, data);
 }
 
 export function getCharacters() {
@@ -35,8 +29,8 @@ export async function removeRace(id) {
   return await axios.post(`${url}/remove-race`, { id });
 }
 
-export async function createRace(name) {
-  return await axios.post(`${url}/add-race`, name);
+export async function createRace(data) {
+  return await axios.post(`${url}/add-race`, data);
 }
 
 export function getRaces() {
@@ -47,24 +41,6 @@ export function getRaces() {
     })
     .catch(error => console.log(error));
 }
-export function getRaceNames() {
-  return axios
-    .get(`${url}/get-race-names`)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => console.log(error));
-}
-export function getRace(name) {
-  console.log("GET RACE OF NAME: " + name)
-  return axios
-    .post(`${url}/get-race-by-name`, {name})
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => console.log(error));
-}
-
 
 // ---------------------------------------------------
 // Class

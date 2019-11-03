@@ -11,13 +11,7 @@ import {
   Typography,
   AutoComplete
 } from "antd";
-import {
-  createCharacter,
-  removeCharacter,
-  getCharacters,
-  getRaceNames,
-  getRace
-} from "../requests";
+import { createCharacter, removeCharacter, getCharacters, getRaces } from "../requests";
 import _default from "antd/lib/date-picker";
 export default { title: "Characters" };
 
@@ -33,7 +27,8 @@ export class CharacterPage extends React.PureComponent {
     getCharacters().then(data => {
       this.setState({ characters: data, hasData: true });
     });
-    getRaceNames().then(data => {
+    getRaces().then(data => {
+      toDict(data);
       this.setState({ races: data });
     });
   }
@@ -45,6 +40,13 @@ export class CharacterPage extends React.PureComponent {
   }
 
   async create(data) {
+    var r;
+    for (r in this.state.races) {
+      if (getKeyByValue(this.state.races[r], data.race) != null) {
+        data.race = this.state.races[r].id;
+        break;
+      }
+    }
     await createCharacter(data).then(() => {
       this.init();
     });
@@ -61,7 +63,7 @@ export class CharacterPage extends React.PureComponent {
         <Row>
           <Col span={24}>
             <WrapFullForm
-              races={this.state.races}
+              races={toDict(this.state.races)}
               create={data => this.create(data)}
             />
           </Col>
@@ -74,6 +76,19 @@ export class CharacterPage extends React.PureComponent {
       </div>
     );
   }
+}
+
+function toDict(props) {
+  var data = [];
+  var p;
+  for (p in props) {
+    data.push(props[p].name);
+  }
+  return data;
+}
+
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
 }
 
 class CharacterTable extends React.PureComponent {
