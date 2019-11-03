@@ -44,6 +44,22 @@ def get_races():
     print(result)
     return json.dumps(result)
 
+@app.route('/get-race-names', methods=['GET'])
+def get_race_names():
+    races = select(r for r in Race)
+    result = [r.name for r in races]
+    print(result)
+    return json.dumps(result)
+
+@app.route('/get-race-by-name', methods=['POST'])
+def get_race():
+    name = request.json.get('name')
+    print(name)
+    races = select(r for r in Race if r.name == name)
+    result = [r.id for r in races]
+    print(result)
+    return json.dumps(result)
+
 @app.route('/add-race', methods=['POST'])
 def add_race():
     name = request.json.get('name')

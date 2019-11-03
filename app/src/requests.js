@@ -9,8 +9,14 @@ export async function removeCharacter(id) {
   return axios.post(`${url}/remove-character`, { id });
 }
 
-export function createCharacter(data) {
-  return axios.post(`${url}/add-character`, data);
+export async function createCharacter(data) {
+  await getRace(data.race).then(response =>{
+    console.log(data.race);
+    data.race = response[0];
+    
+    return axios.post(`${url}/add-character`, data);
+  });
+  
 }
 
 export function getCharacters() {
@@ -26,20 +32,35 @@ export function getCharacters() {
 // RACE
 // ---------------------------------------------------
 export async function removeRace(id) {
-  await axios.post(`${url}/remove-race`, { id });
-  this.init();
+  return await axios.post(`${url}/remove-race`, { id });
 }
 
 export async function createRace(name) {
-  await axios.post(`${url}/add-race`, name);
-  this.init();
+  return await axios.post(`${url}/add-race`, name);
 }
 
 export function getRaces() {
-  axios
+  return axios
     .get(`${url}/get-races`)
     .then(response => {
-      this.setState({ races: response.data, hasData: true });
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+export function getRaceNames() {
+  return axios
+    .get(`${url}/get-race-names`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+export function getRace(name) {
+  console.log("GET RACE OF NAME: " + name)
+  return axios
+    .post(`${url}/get-race-by-name`, {name})
+    .then(response => {
+      return response.data;
     })
     .catch(error => console.log(error));
 }
