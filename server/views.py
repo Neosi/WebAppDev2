@@ -1,6 +1,6 @@
 from flask import request
 from server import app
-from server.entities import Character, Race, CharClass
+from server.entities import Character, Race, Class
 from pony.orm import select
 import json
 
@@ -10,7 +10,11 @@ import json
 @app.route('/add-character', methods=['POST'])
 def add_character():
     name = request.json.get('name')
-    Character(name=name)
+    age = request.json.get('age')
+    character_class = request.json.get('character_class')
+    race = request.json.get('race')
+    background = request.json.get('background')
+    Character(name=name, age=age, character_class=character_class, race=race, background=background)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-character', methods=['POST'])
@@ -22,12 +26,12 @@ def remove_character():
 @app.route('/get-characters', methods=['GET'])
 def get_characters():
     characters = select(c for c in Character)
-    result = [c.to_dict() for c in characters]
+    result = [c.to_dict(related_objects=True) for c in characters]
     for r in result:
         if r["race"] is not None:
-            r["race"] = Race[r["race"]].name
+            r["race"] = r["race"].name
         if r["character_class"] is not None:
-            r["character_class"] = Race[r["character_class"]].name
+            r["character_class"] = r["character_class"].name
     return json.dumps(result)
 
 # ------------------------------------------
@@ -57,7 +61,7 @@ def remove_race():
 # ------------------------------------------
 @app.route('/get-classes', methods=['GET'])
 def get_classes():
-    classes = select(c for c in CharClass)
+    classes = select(c for c in Class)
     result = [c.to_dict() for c in classes]
     print(result)
     return json.dumps(result)
@@ -65,11 +69,11 @@ def get_classes():
 @app.route('/add-class', methods=['POST'])
 def add_class():
     name = request.json.get('name')
-    CharClass(name=name)
+    Class(name=name)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-class', methods=['POST'])
 def remove_class():
     id = request.json.get('id')
-    CharClass[id].delete()
+    Class[id].delete()
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
