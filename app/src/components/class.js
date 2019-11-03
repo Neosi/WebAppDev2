@@ -9,21 +9,32 @@ export default class ClassPage extends React.PureComponent {
   }
 
   componentDidMount() {
-    getClasses.bind(this)();
+    this.init();
   }
 
   init() {
-    getClasses.bind(this)();
+    getClasses().then(data => {
+      this.setState({ classes: data });
+    });
+  }
+
+  async add(name) {
+    await createClass(name);
+    this.init();
+  }
+  async remove(id) {
+    await removeClass(id);
+    this.init();
   }
 
   render() {
     return (
       <div>
-        <WrappedClassForm create={createClass.bind(this)} />
+        <WrappedClassForm create={name => this.add(name)} />
         <ClassTable
           classes={this.state.classes}
           hasData={this.state.hasData}
-          remove={removeClass.bind(this)}
+          remove={id => this.remove(id)}
         ></ClassTable>
       </div>
     );

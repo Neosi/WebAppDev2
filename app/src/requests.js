@@ -46,19 +46,18 @@ export function getRaces() {
 // Class
 // ---------------------------------------------------
 export async function removeClass(id) {
-  await axios.post(`${url}/remove-class`, { id });
-  this.init();
+  return await axios.post(`${url}/remove-class`, { id });
 }
 
 export async function createClass(name) {
-  await axios.post(`${url}/add-class`, name);
-  this.init();
+  return await axios.post(`${url}/add-class`, name);
 }
 
 export function getClasses() {
-  axios
+  return axios
     .get(`${url}/get-classes`)
     .then(response => {
+      return response.data;
       this.setState({ classes: response.data, hasData: true });
     })
     .catch(error => console.log(error));
