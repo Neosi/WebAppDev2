@@ -3,9 +3,9 @@ from pony.orm import Database, Required, Optional, PrimaryKey, Set
 db = Database()
 db.bind(provider='sqlite', filename='database.db', create_db=True)
 
-class CharClass(db.Entity):
+class Class(db.Entity):
     id = PrimaryKey(int, auto=True)
-    name = Optional(str)
+    name = Optional(str, nullable=True)
     characters = Set('Character')
 
 class Allignment(db.Entity):
@@ -15,7 +15,7 @@ class Allignment(db.Entity):
 
 class Race(db.Entity):
     id = PrimaryKey(int, auto=True)
-    name = Optional(str)
+    name = Optional(str, nullable=True)
     characters = Set('Character')
 
 class Ideal(db.Entity):
@@ -40,10 +40,10 @@ class Trait(db.Entity):
 
 class Character(db.Entity):
     id = PrimaryKey(int, auto=True)
-    name = Optional(str)
+    name = Optional(str, nullable=True)
     age = Optional(int)
     affiliations = Set("Character", reverse='affiliations')
-    character_class = Optional(CharClass)
+    character_class = Optional(Class)
     race = Optional(Race)
     allignment = Optional(Allignment)
     ideals = Set(Ideal)
@@ -51,8 +51,8 @@ class Character(db.Entity):
     flaws = Set(Flaw)
     traits = Set(Trait)
     tags = Set('Tag')
-    background = Optional(str)
-    appearance = Optional(str)
+    background = Optional(str, nullable=True)
+    appearance = Optional(str, nullable=True)
 
 class Tag(db.Entity):
     id = PrimaryKey(int, auto=True)
