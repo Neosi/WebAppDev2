@@ -6,6 +6,7 @@ import { Sidebar } from "./components/sidebar.stories";
 import { Heading } from "./components/header.stories";
 import { CharacterPage } from "./components/character";
 import RacePage from "./components/race";
+import ClassPage from "./components/class";
 const { Content } = Layout;
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
                     <CharacterPage/>
                   </Route>
                   <Route path="/races"><RacePage/></Route>
-                  <Route path="/class">Class</Route>
+                  <Route path="/class"><ClassPage/></Route>
                   <Route path="/personality">PERSONALITY</Route>
                   <Route path="/tags">TAGS</Route>
                   <Route path="/relationships">RELATIONSHIPS</Route>
