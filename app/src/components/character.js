@@ -11,7 +11,13 @@ import {
   Typography,
   AutoComplete
 } from "antd";
-import { createCharacter, removeCharacter, getCharacters, getRaces } from "../requests";
+import {
+  createCharacter,
+  removeCharacter,
+  getCharacters,
+  getRaces,
+  getClasses
+} from "../requests";
 import _default from "antd/lib/date-picker";
 export default { title: "Characters" };
 
@@ -20,7 +26,7 @@ const { Title } = Typography;
 export class CharacterPage extends React.PureComponent {
   constructor() {
     super();
-    this.state = { characters: [], races: [], hasData: false };
+    this.state = { characters: [], races: [], classes: [], hasData: false };
   }
 
   componentDidMount() {
@@ -31,6 +37,12 @@ export class CharacterPage extends React.PureComponent {
       toDict(data);
       this.setState({ races: data });
     });
+    getClasses().then(data => {
+      console.log(toDict(data));
+      console.log(data);
+      console.log(JSON.stringify(data));
+      this.setState({ classes: data });
+    });
   }
 
   init() {
@@ -40,10 +52,19 @@ export class CharacterPage extends React.PureComponent {
   }
 
   async create(data) {
+    console.log(data);
     var r;
     for (r in this.state.races) {
       if (getKeyByValue(this.state.races[r], data.race) != null) {
         data.race = this.state.races[r].id;
+        break;
+      }
+    }
+    var c;
+    for (c in this.state.classes) {
+      console.log(data.class);
+      if (getKeyByValue(this.state.classes[c], data.character_class) != null) {
+        data.character_class = this.state.classes[c].id;
         break;
       }
     }
@@ -64,6 +85,7 @@ export class CharacterPage extends React.PureComponent {
           <Col span={24}>
             <WrapFullForm
               races={toDict(this.state.races)}
+              classes={toDict(this.state.classes)}
               create={data => this.create(data)}
             />
           </Col>
@@ -202,7 +224,14 @@ class FullForm extends React.PureComponent {
         <Row>
           <Col span={12} style={{ left: 0 }}>
             <Form.Item label="Class">
-              {getFieldDecorator("character-class")(<Input />)}
+              {getFieldDecorator("character_class")(
+                <AutoComplete
+                  style={{ left: 0 }}
+                  dataSource={this.props.classes}
+                  placeholder={this.props.placeholder}
+                  filterOption={matchText}
+                />
+              )}
             </Form.Item>
           </Col>
           <Col span={12} style={{ left: 0 }}>

@@ -58,7 +58,6 @@ export function getClasses() {
     .get(`${url}/get-classes`)
     .then(response => {
       return response.data;
-      this.setState({ classes: response.data, hasData: true });
     })
     .catch(error => console.log(error));
 }
