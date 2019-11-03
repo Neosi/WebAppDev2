@@ -9,7 +9,9 @@ import {
   Row,
   Col,
   Typography,
-  AutoComplete
+  AutoComplete,
+  Popconfirm,
+  message
 } from "antd";
 import {
   createCharacter,
@@ -75,6 +77,7 @@ export class CharacterPage extends React.PureComponent {
 
   async remove(id) {
     await removeCharacter(id).then(() => {
+      message.success("Removed character");
       this.init();
     });
   }
@@ -112,7 +115,10 @@ function toDict(props) {
 function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
 }
-
+function cancel(e) {
+  console.log(e);
+  message.error("Cancelled");
+}
 class CharacterTable extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -150,8 +156,15 @@ class CharacterTable extends React.PureComponent {
           <span>
             <a>View</a>
             <Divider type="vertical" />
-            <a onClick={() => this.props.remove(record.id)}>Delete</a>
-            <Divider type="vertical" />
+            <Popconfirm
+              title="Are you sure delete this character?"
+              onConfirm={() => this.props.remove(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              Delete
+            </Popconfirm>
             <a className="ant-dropdown-link">
               More actions <Icon type="down" />
             </a>
