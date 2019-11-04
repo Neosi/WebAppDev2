@@ -186,7 +186,7 @@ class CharacterTable extends React.PureComponent {
         columns={columns}
         expandedRowRender={record => (
           <div>
-            Allignment: {record.allignment}
+            alignment: {record.alignment}
             <Divider type="vertical" />
             Age: {record.age}
             <Divider type="vertical" />
