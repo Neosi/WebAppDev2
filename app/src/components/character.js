@@ -21,9 +21,10 @@ import {
   getClasses
 } from "../requests";
 import _default from "antd/lib/date-picker";
+import { Link } from "react-router-dom";
 export default { title: "Characters" };
 
-const { Title } = Typography;
+const { Text } = Typography;
 
 export class CharacterPage extends React.PureComponent {
   constructor() {
@@ -85,6 +86,7 @@ export class CharacterPage extends React.PureComponent {
     return (
       <div>
         <Row>
+          <Text editable>Just testing</Text>
           <Col span={24}>
             <WrapFullForm
               races={toDict(this.state.races)}
@@ -154,7 +156,7 @@ class CharacterTable extends React.PureComponent {
         key: "actions",
         render: (text, record) => (
           <span>
-            <a>View</a>
+            <Link to={"/character/" + record.id}>View</Link>
             <Divider type="vertical" />
             <Popconfirm
               title="Are you sure delete this character?"
@@ -165,9 +167,6 @@ class CharacterTable extends React.PureComponent {
             >
               Delete
             </Popconfirm>
-            <a className="ant-dropdown-link">
-              More actions <Icon type="down" />
-            </a>
           </span>
         )
       }
