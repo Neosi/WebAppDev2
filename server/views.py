@@ -34,6 +34,15 @@ def get_characters():
             r["character_class"] = r["character_class"].name
     return json.dumps(result)
 
+@app.route('/get-character', methods=['POST'])
+def get_character():
+    id = request.json.get('id')
+    temp = Character[id].to_dict(with_collections=False, related_objects=True)
+    temp["race"] = temp["race"].to_dict()
+    temp["character_class"] = temp["character_class"].to_dict()
+    print("DATA: " + str(temp))
+    return json.dumps(temp)
+
 # ------------------------------------------
 # Race Routes
 # ------------------------------------------
