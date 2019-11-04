@@ -8,7 +8,7 @@ class Class(db.Entity):
     name = Optional(str, nullable=True)
     characters = Set('Character')
 
-class Allignment(db.Entity):
+class Alignment(db.Entity):
     id = PrimaryKey(int, auto=True)
     name = Optional(str)
     characters = Set('Character')
@@ -45,7 +45,7 @@ class Character(db.Entity):
     affiliations = Set("Character", reverse='affiliations')
     character_class = Optional(Class)
     race = Optional(Race)
-    allignment = Optional(Allignment)
+    alignment = Optional(Alignment)
     ideals = Set(Ideal)
     bonds = Set(Bond)
     flaws = Set(Flaw)
