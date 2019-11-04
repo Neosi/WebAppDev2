@@ -13,13 +13,17 @@ export async function createCharacter(data) {
   return await axios.post(`${url}/add-character`, data);
 }
 
-export function getCharacter(id){
+export function updateCharacter(data) {
+  return axios.post(`${url}/update-character`, data);
+}
+
+export function getCharacter(id) {
   return axios
-  .post(`${url}/get-character`, {id})
-  .then(response => {
-    return response.data;
-  })
-  .catch(error => console.log(error));
+    .post(`${url}/get-character`, { id })
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
 }
 
 export function getCharacters() {

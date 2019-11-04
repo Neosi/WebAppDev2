@@ -17,6 +17,13 @@ def add_character():
     Character(name=name, age=age, character_class=character_class, race=race, background=background)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
+@app.route('/update-character', methods=['POST'])
+def update_character():
+    id = request.json.get('id')
+    char = Character[id]
+    char.background = request.json.get('background')
+    return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
+
 @app.route('/remove-character', methods=['POST'])
 def remove_character():
     id = request.json.get('id')
