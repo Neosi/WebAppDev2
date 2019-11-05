@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Typography,
+  Tag,
   AutoComplete
 } from "antd";
 import {
@@ -21,7 +22,7 @@ import {
 import _default from "antd/lib/date-picker";
 export default { title: "Characters" };
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 export class CharacterPage extends React.PureComponent {
   constructor() {
@@ -174,13 +175,35 @@ class CharacterTable extends React.PureComponent {
         columns={columns}
         expandedRowRender={record => (
           <div>
-            Allignment: {record.allignment}
-            <Divider type="vertical" />
-            Age: {record.age}
-            <Divider type="vertical" />
-            Background:{record.background}
-            <Divider type="vertical" />
-            Appearance: {record.appearance}
+            <Row>
+              <Col>
+                <Text ellipsis>Age: {record.age}</Text>
+                <Divider type="vertical" />
+                <Text ellipsis>Allignment: {record.allignment}</Text>
+                <Divider type="vertical" />
+                <Text ellipsis>Background:{record.background}</Text>
+                <Divider type="vertical" />
+                <Text ellipsis>Appearance: {record.appearance}</Text>
+              </Col>
+            </Row>
+            <Row>
+
+            </Row>
+            <Row>
+              <Col>
+                <Tag>
+                  Tag
+                </Tag>
+                <Tag>
+                  Tag
+                </Tag>
+                <Tag>
+                  Tag
+                </Tag>
+              </Col>
+
+            </Row>
+
           </div>
         )}
       />

@@ -12,18 +12,23 @@ export const Sidebar = () => (
   <Sider width={200} style={{ background: "#fff" }}>
     <Menu
       mode="inline"
-      defaultSelectedKeys={["1"]}
+      defaultSelectedKeys={["0"]}
       defaultOpenKeys={["sub1"]}
       style={{ height: "100%", borderRight: 0 }}
     >
-      <Menu.Item key="1">
+      <Menu.Item key="0">
         <Link to="/">
           <Icon type="home" />
           Home
         </Link>
       </Menu.Item>
+      <Menu.Item key="1">
+        <Link to="/builder">
+        <Icon type="user-add" />          Builder
+        </Link>
+      </Menu.Item>
       <Menu.Item key="2">
-        <Link to="/characters"><Icon type="user" />Characters</Link>
+        <Link to="/characters"><Icon type="team" />Characters</Link>
       </Menu.Item>
       <SubMenu
         key="sub2"

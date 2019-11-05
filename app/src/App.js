@@ -7,6 +7,7 @@ import { Heading } from "./components/header.stories";
 import { CharacterPage } from "./components/character";
 import RacePage from "./components/race";
 import ClassPage from "./components/class";
+import Builder from "./components/builder"
 const { Content } = Layout;
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
                 <Switch>
                   <Route path="/characters">
                     <CharacterPage/>
+                  </Route>
+                  <Route path="/builder">
+                    <Builder/>
                   </Route>
                   <Route path="/races"><RacePage/></Route>
                   <Route path="/class"><ClassPage/></Route>
