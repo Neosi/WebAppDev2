@@ -3,6 +3,7 @@ import {
   Table,
   Divider,
   Icon,
+  Select,
   Form,
   Input,
   Button,
@@ -10,7 +11,9 @@ import {
   Col,
   Typography,
   Tag,
-  AutoComplete
+  AutoComplete,
+  Popconfirm,
+  message
 } from "antd";
 import {
   createCharacter,
@@ -20,9 +23,11 @@ import {
   getClasses
 } from "../requests";
 import _default from "antd/lib/date-picker";
+import { Link } from "react-router-dom";
 export default { title: "Characters" };
 
 const { Title, Text } = Typography;
+const { Option } = Select;
 
 export class CharacterPage extends React.PureComponent {
   constructor() {
@@ -35,14 +40,16 @@ export class CharacterPage extends React.PureComponent {
       this.setState({ characters: data, hasData: true });
     });
     getRaces().then(data => {
-      toDict(data);
       this.setState({ races: data });
     });
     getClasses().then(data => {
-      console.log(toDict(data));
       console.log(data);
-      console.log(JSON.stringify(data));
       this.setState({ classes: data });
+      const test = data.map(clas => ({
+        text: `${clas.name}`,
+        value: clas.id
+      }));
+      console.log(test);
     });
   }
 
@@ -53,22 +60,8 @@ export class CharacterPage extends React.PureComponent {
   }
 
   async create(data) {
-    console.log(data);
-    var r;
-    for (r in this.state.races) {
-      if (getKeyByValue(this.state.races[r], data.race) != null) {
-        data.race = this.state.races[r].id;
-        break;
-      }
-    }
-    var c;
-    for (c in this.state.classes) {
-      console.log(data.class);
-      if (getKeyByValue(this.state.classes[c], data.character_class) != null) {
-        data.character_class = this.state.classes[c].id;
-        break;
-      }
-    }
+    console.log("RACE " + data.race);
+
     await createCharacter(data).then(() => {
       this.init();
     });
@@ -76,6 +69,7 @@ export class CharacterPage extends React.PureComponent {
 
   async remove(id) {
     await removeCharacter(id).then(() => {
+      message.success("Removed character");
       this.init();
     });
   }
@@ -85,8 +79,8 @@ export class CharacterPage extends React.PureComponent {
         <Row>
           <Col span={24}>
             <WrapFullForm
-              races={toDict(this.state.races)}
-              classes={toDict(this.state.classes)}
+              races={this.state.races}
+              classes={this.state.classes}
               create={data => this.create(data)}
             />
           </Col>
@@ -100,20 +94,10 @@ export class CharacterPage extends React.PureComponent {
     );
   }
 }
-
-function toDict(props) {
-  var data = [];
-  var p;
-  for (p in props) {
-    data.push(props[p].name);
-  }
-  return data;
+function cancel(e) {
+  console.log(e);
+  message.error("Cancelled");
 }
-
-function getKeyByValue(object, value) {
-  return Object.keys(object).find(key => object[key] === value);
-}
-
 class CharacterTable extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -149,13 +133,17 @@ class CharacterTable extends React.PureComponent {
         key: "actions",
         render: (text, record) => (
           <span>
-            <a>View</a>
+            <Link to={"/character/" + record.id}>View</Link>
             <Divider type="vertical" />
-            <a onClick={() => this.props.remove(record.id)}>Delete</a>
-            <Divider type="vertical" />
-            <a className="ant-dropdown-link">
-              More actions <Icon type="down" />
-            </a>
+            <Popconfirm
+              title="Are you sure delete this character?"
+              onConfirm={() => this.props.remove(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              Delete
+            </Popconfirm>
           </span>
         )
       }
@@ -211,9 +199,6 @@ class CharacterTable extends React.PureComponent {
   }
 }
 
-const matchText = (inputValue, option) =>
-  option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1;
-
 class FullForm extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -248,24 +233,26 @@ class FullForm extends React.PureComponent {
           <Col span={12} style={{ left: 0 }}>
             <Form.Item label="Class">
               {getFieldDecorator("character_class")(
-                <AutoComplete
-                  style={{ left: 0 }}
-                  dataSource={this.props.classes}
-                  placeholder={this.props.placeholder}
-                  filterOption={matchText}
-                />
+                <Select showSearch style={{ minWidth: 180 }}>
+                  {this.props.classes.map(c => (
+                    <Option style={{ width: "100%" }} key={c.id}>
+                      {c.name}
+                    </Option>
+                  ))}
+                </Select>
               )}
             </Form.Item>
           </Col>
           <Col span={12} style={{ left: 0 }}>
             <Form.Item label="Race">
               {getFieldDecorator("race")(
-                <AutoComplete
-                  style={{ left: 0 }}
-                  dataSource={this.props.races}
-                  placeholder={this.props.placeholder}
-                  filterOption={matchText}
-                />
+                <Select showSearch style={{ minWidth: 180 }}>
+                  {this.props.races.map(c => (
+                    <Option style={{ width: "100%" }} key={c.id}>
+                      {c.name}
+                    </Option>
+                  ))}
+                </Select>
               )}
             </Form.Item>
           </Col>
