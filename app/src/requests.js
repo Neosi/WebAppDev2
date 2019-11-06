@@ -92,7 +92,7 @@ export function updateTrait(data) {
 }
 
 export async function createTrait(description) {
-  return await axios.post(`${url}/add-trait`, description);
+  return await axios.post(`${url}/add-trait`, {description});
 }
 
 export function getTraits() {
@@ -114,10 +114,10 @@ export function updateIdeal(data) {
 }
 
 export async function createIdeal(description) {
-  return await axios.post(`${url}/add-ideal`, description);
+  return await axios.post(`${url}/add-ideal`, {description});
 }
 
-export function getIdeal() {
+export function getIdeals() {
   return axios
     .get(`${url}/get-ideals`)
     .then(response => {
@@ -136,7 +136,7 @@ export function updateBond(data) {
 }
 
 export async function createBond(description) {
-  return await axios.post(`${url}/add-bond`, description);
+  return await axios.post(`${url}/add-bond`, {description});
 }
 
 export function getBonds() {
@@ -158,7 +158,7 @@ export function updateFlaw(data) {
 }
 
 export async function createFlaw(description) {
-  return await axios.post(`${url}/add-flaw`, description);
+  return await axios.post(`${url}/add-flaw`, {description});
 }
 
 export function getFlaws() {

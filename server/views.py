@@ -127,7 +127,7 @@ def get_trait():
 @app.route('/add-trait', methods=['POST'])
 def add_trait():
     trait = request.json.get('description')
-    Trait(derscription=trait)
+    Trait(description=trait)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-trait', methods=['POST'])
@@ -149,13 +149,13 @@ def get_ideals():
 @app.route('/update-ideal', methods=['POST'])
 def get_ideal():
     id = request.json.get('id')
-    Ideal[id].derscription = request.json.get('derscription')
+    Ideal[id].description = request.json.get('description')
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/add-ideal', methods=['POST'])
 def add_ideal():
-    ideal = request.json.get('derscription')
-    Ideal(derscription=ideal)
+    ideal = request.json.get('description')
+    Ideal(description=ideal)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-ideal', methods=['POST'])
@@ -177,13 +177,13 @@ def get_bonds():
 @app.route('/update-bond', methods=['POST'])
 def get_bond():
     id = request.json.get('id')
-    Bond[id].derscription = request.json.get('derscription')
+    Bond[id].description = request.json.get('description')
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/add-bond', methods=['POST'])
 def add_bond():
-    bond = request.json.get('derscription')
-    Bond(derscription=bond)
+    bond = request.json.get('description')
+    Bond(description=bond)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-bond', methods=['POST'])
@@ -205,13 +205,13 @@ def get_flaws():
 @app.route('/update-flaw', methods=['POST'])
 def get_flaw():
     id = request.json.get('id')
-    Flaw[id].derscription = request.json.get('derscription')
+    Flaw[id].description = request.json.get('description')
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/add-flaw', methods=['POST'])
 def add_flaw():
-    flaw = request.json.get('derscription')
-    Flaw(derscription=flaw)
+    flaw = request.json.get('description')
+    Flaw(description=flaw)
     return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 
 @app.route('/remove-flaw', methods=['POST'])
