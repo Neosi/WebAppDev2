@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Typography, Input, Table, Button } from "antd";
+import { Row, Col, Typography, Input, Table, Button, Divider } from "antd";
 import {
   createTrait,
   removeTrait,
@@ -90,46 +90,53 @@ export default class Personality extends React.PureComponent {
         <Row>
           <Title>Personality</Title>
         </Row>
-        <Row>
-          <Col span={12} className="personality-column">
+        <Row type="flex" gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <Title level={3}>Traits</Title>
             <Traits traits={this.state.traits} />
             <TextArea
               onChange={data => this.setState({ trait: data.target.value })}
             />
-            <Button onClick={() => this.addTrait(this.state.trait)}>
+            <Divider />
+            <Button block onClick={() => this.addTrait(this.state.trait)}>
               Add Trait
             </Button>
           </Col>
-          <Col span={12} className="personality-column">
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <Title level={3}>Ideals</Title>
             <Ideals ideals={this.state.ideals} />
             <TextArea
               onChange={data => this.setState({ ideal: data.target.value })}
             />
-            <Button onClick={() => this.addIdeal(this.state.ideal)}>
+            <Divider />
+
+            <Button block onClick={() => this.addIdeal(this.state.ideal)}>
               Add Ideal
             </Button>
           </Col>
         </Row>
-        <Row>
-          <Col span={12} className="personality-column">
+        <Row type="flex" gutter={[16, 16]}>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <Title level={3}>Bonds</Title>
             <Bonds bonds={this.state.bonds} />
             <TextArea
               onChange={data => this.setState({ bond: data.target.value })}
             />
-            <Button onClick={() => this.addBond(this.state.bond)}>
+            <Divider />
+
+            <Button block onClick={() => this.addBond(this.state.bond)}>
               Add Bond
             </Button>
           </Col>
-          <Col span={12} className="personality-column">
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
             <Title level={3}>Flaws</Title>
             <Flaws flaws={this.state.flaws} />
             <TextArea
               onChange={data => this.setState({ flaw: data.target.value })}
             />
-            <Button onClick={() => this.addFlaw(this.state.flaw)}>
+            <Divider />
+
+            <Button block onClick={() => this.addFlaw(this.state.flaw)}>
               Add Flaw
             </Button>
           </Col>
@@ -153,14 +160,14 @@ const columns = [
 ];
 
 const Traits = props => {
-  return <Table columns={columns} dataSource={props.traits}></Table>;
+  return <Table bordered columns={columns} dataSource={props.traits}></Table>;
 };
 const Ideals = props => {
-  return <Table columns={columns} dataSource={props.ideals}></Table>;
+  return <Table bordered columns={columns} dataSource={props.ideals}></Table>;
 };
 const Bonds = props => {
-  return <Table columns={columns} dataSource={props.bonds}></Table>;
+  return <Table bordered columns={columns} dataSource={props.bonds}></Table>;
 };
 const Flaws = props => {
-  return <Table columns={columns} dataSource={props.flaws}></Table>;
+  return <Table bordered columns={columns} dataSource={props.flaws}></Table>;
 };
