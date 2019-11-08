@@ -14,9 +14,9 @@ import {
   removeFlaw,
   getFlaws
 } from "../requests";
+import { PersonalityColumn } from "./stories/personality";
 
-const { Title, Text } = Typography;
-const { TextArea } = Input;
+const { Title } = Typography;
 
 export default class Personality extends React.PureComponent {
   constructor() {
@@ -26,10 +26,6 @@ export default class Personality extends React.PureComponent {
       ideals: [],
       bonds: [],
       flaws: [],
-      trait: "",
-      bond: "",
-      flaw: "",
-      ideal: ""
     };
   }
 
@@ -91,55 +87,33 @@ export default class Personality extends React.PureComponent {
           <Title>Personality</Title>
         </Row>
         <Row type="flex" gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <Title level={3}>Traits</Title>
-            <Traits traits={this.state.traits} />
-            <TextArea
-              onChange={data => this.setState({ trait: data.target.value })}
-            />
-            <Divider />
-            <Button block onClick={() => this.addTrait(this.state.trait)}>
-              Add Trait
-            </Button>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <Title level={3}>Ideals</Title>
-            <Ideals ideals={this.state.ideals} />
-            <TextArea
-              onChange={data => this.setState({ ideal: data.target.value })}
-            />
-            <Divider />
-
-            <Button block onClick={() => this.addIdeal(this.state.ideal)}>
-              Add Ideal
-            </Button>
-          </Col>
+          <PersonalityColumn
+            title="Trait"
+            data={this.state.traits}
+            submit={data => this.addTrait(data)}
+            delete={id => this.removeTrait(id)}
+          />
+          <PersonalityColumn
+            title="Ideal"
+            data={this.state.ideals}
+            submit={data => this.addIdeal(data)}
+            delete={id => this.removeIdeal(id)}
+          />
         </Row>
         <Row type="flex" gutter={[16, 16]}>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <Title level={3}>Bonds</Title>
-            <Bonds bonds={this.state.bonds} />
-            <TextArea
-              onChange={data => this.setState({ bond: data.target.value })}
-            />
-            <Divider />
+          <PersonalityColumn
+            title="Bond"
+            data={this.state.bonds}
+            submit={data => this.addBond(data)}
+            delete={id => this.removeBond(id)}
+          />
 
-            <Button block onClick={() => this.addBond(this.state.bond)}>
-              Add Bond
-            </Button>
-          </Col>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            <Title level={3}>Flaws</Title>
-            <Flaws flaws={this.state.flaws} />
-            <TextArea
-              onChange={data => this.setState({ flaw: data.target.value })}
-            />
-            <Divider />
-
-            <Button block onClick={() => this.addFlaw(this.state.flaw)}>
-              Add Flaw
-            </Button>
-          </Col>
+          <PersonalityColumn
+            title="Flaw"
+            data={this.state.flaws}
+            submit={data => this.addFlaw(data)}
+            delete={id => this.removeFlaw(id)}
+          />
         </Row>
       </div>
     );
@@ -158,16 +132,3 @@ const columns = [
     key: "description"
   }
 ];
-
-const Traits = props => {
-  return <Table bordered columns={columns} dataSource={props.traits}></Table>;
-};
-const Ideals = props => {
-  return <Table bordered columns={columns} dataSource={props.ideals}></Table>;
-};
-const Bonds = props => {
-  return <Table bordered columns={columns} dataSource={props.bonds}></Table>;
-};
-const Flaws = props => {
-  return <Table bordered columns={columns} dataSource={props.flaws}></Table>;
-};
