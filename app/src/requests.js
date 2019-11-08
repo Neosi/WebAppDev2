@@ -95,6 +95,16 @@ export async function createTrait(description) {
   return await axios.post(`${url}/add-trait`, {description});
 }
 
+export function getRandomTrait() {
+  return axios
+    .get(`${url}/get-random-trait`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+
+
 export function getTraits() {
   return axios
     .get(`${url}/get-traits`)
@@ -115,6 +125,15 @@ export function updateIdeal(data) {
 
 export async function createIdeal(description) {
   return await axios.post(`${url}/add-ideal`, {description});
+}
+
+export function getRandomIdeal() {
+  return axios
+    .get(`${url}/get-random-ideal`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
 }
 
 export function getIdeals() {
@@ -139,6 +158,16 @@ export async function createBond(description) {
   return await axios.post(`${url}/add-bond`, {description});
 }
 
+export function getRandomBond() {
+  return axios
+    .get(`${url}/get-random-bond`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+
+
 export function getBonds() {
   return axios
     .get(`${url}/get-bonds`)
@@ -161,9 +190,31 @@ export async function createFlaw(description) {
   return await axios.post(`${url}/add-flaw`, {description});
 }
 
+export function getRandomFlaw() {
+  return axios
+    .get(`${url}/get-random-flaw`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+
+
 export function getFlaws() {
   return axios
     .get(`${url}/get-flaws`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log(error));
+}
+
+// ---------------------------------------------------
+// Alignment
+// ---------------------------------------------------
+export function getAlignments() {
+  return axios
+    .get(`${url}/get-alignments`)
     .then(response => {
       return response.data;
     })

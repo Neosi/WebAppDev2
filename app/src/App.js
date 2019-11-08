@@ -7,11 +7,9 @@ import { Heading } from "./components/header.stories";
 import { CharacterPage } from "./components/character";
 import RacePage from "./components/race";
 import ClassPage from "./components/class";
-<<<<<<< HEAD
-import Builder from "./components/builder"
-=======
-import CharacterView from "./components/character.view"
->>>>>>> 7256016c2cf5820f3e3e43698750986d38fb24c3
+import {WrappedBuilder} from "./components/builder";
+import CharacterView from "./components/character.view";
+import PersonalityPage from "./components/personality";
 const { Content } = Layout;
 
 function App() {
@@ -37,15 +35,12 @@ function App() {
                   <Route path="/character">
                     <CharacterView/>
                   </Route>
-<<<<<<< HEAD
                   <Route path="/builder">
-                    <Builder/>
+                    <WrappedBuilder/>
                   </Route>
                   <Route path="/races"><RacePage/></Route>
                   <Route path="/class"><ClassPage/></Route>
-=======
->>>>>>> 7256016c2cf5820f3e3e43698750986d38fb24c3
-                  <Route path="/personality">PERSONALITY</Route>
+                  <Route path="/personality"><PersonalityPage/></Route>
                   <Route path="/tags">TAGS</Route>
                   <Route path="/relationships">RELATIONSHIPS</Route>
                   <Route path="/">HOME</Route>
