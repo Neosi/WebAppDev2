@@ -68,7 +68,6 @@ def get_characters():
             r["bonds"] = [t.to_dict() for t in r["bonds"]]
         if r["flaws"] is not None:
             r["flaws"] = [t.to_dict() for t in r["flaws"]]    
-    print(r)
     return json.dumps(result)
 
 
