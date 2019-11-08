@@ -7,16 +7,12 @@ import {
   Input,
   Form,
   Divider,
-  Icon,
-  Select
+  Select,
+  Tag
 } from "antd";
 import {
   getRaces,
   getClasses,
-  getTraits,
-  getBonds,
-  getFlaws,
-  getIdeals,
   getAlignments,
   getRandomIdeal,
   getRandomBond,
@@ -24,13 +20,13 @@ import {
   getRandomTrait,
   createCharacter
 } from "../requests";
-import { PersonalitySection, NameSelector } from "./stories/builder";
+import { PersonalitySection } from "./stories/builder";
 
 const { Title } = Typography;
 const { TextArea } = Input;
 const { Option } = Select;
 
-class Builder extends React.Component {
+class Builder extends React.PureComponent {
   constructor() {
     super();
     this.state = {
@@ -99,8 +95,8 @@ class Builder extends React.Component {
       bonds: blist,
       flaws: flist
     });
-    console.log(tlist)  
-   
+    console.log(tlist)
+
     console.log(this.props.form.getFieldsValue());
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -207,16 +203,16 @@ class Builder extends React.Component {
                       }
                     >
                       {this.state.races.map(c => (
-                        <Option onClick={() =>this.handleRaceChange(c)} key={c.id}>{c.name}</Option>
+                        <Option onClick={() => this.handleRaceChange(c)} key={c.id}>{c.name}</Option>
                       ))}
                     </Select>
                   )}
                 </Form.Item>
                 <Divider>race choices</Divider>
                 {this.state.races.map(r => (
-                  <Button onClick={() => this.handleRaceChange(r)}>
+                  <Tag color={randomColour()} onClick={() => this.handleRaceChange(r)}>
                     {r.name}
-                  </Button>
+                  </Tag>
                 ))}
               </Col>
               <Col span={12}>
@@ -233,21 +229,21 @@ class Builder extends React.Component {
                       }
                     >
                       {this.state.classes.map(c => (
-                        <Option onClick={() =>this.handleClassChange(c)} key={c.id}>{c.name}</Option>
+                        <Option onClick={() => this.handleClassChange(c)} key={c.id}>{c.name}</Option>
                       ))}
                     </Select>
                   )}
                 </Form.Item>
                 <Divider>class choices</Divider>
                 {this.state.classes.map(r => (
-                  <Button onClick={() => this.handleClassChange(r)}>
+                  <Tag color={randomColour()} onClick={() => this.handleClassChange(r)}>
                     {r.name}
-                  </Button>
+                  </Tag>
                 ))}
               </Col>
             </Row>
             <Divider />
-            <Row> 
+            <Row>
               <Title level={3}>Background</Title>
               <Form.Item>
                 {getFieldDecorator("background")(
@@ -296,3 +292,20 @@ class Builder extends React.Component {
 }
 
 export const WrappedBuilder = Form.create({ name: "character_form" })(Builder);
+
+function randomColour() {
+  let string = [
+    "red",
+    "blue",
+    "lime",
+    "geekblue",
+    "green",
+    "orange",
+    "magenta",
+    "volcano",
+    "gold",
+    "purple",
+    "cyan"
+  ]
+  return string[Math.floor(Math.random() * string.length)];
+}
