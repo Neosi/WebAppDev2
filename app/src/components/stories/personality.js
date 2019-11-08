@@ -63,7 +63,7 @@ export const PersonalityColumn = props => {
         block
         onClick={() => props.submit(input)}
       >
-        Add New {props.title}
+        Add {props.title}
       </Button>
     </Col>
   );

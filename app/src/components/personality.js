@@ -25,7 +25,7 @@ export default class Personality extends React.PureComponent {
       traits: [],
       ideals: [],
       bonds: [],
-      flaws: [],
+      flaws: []
     };
   }
 
@@ -99,15 +99,12 @@ export default class Personality extends React.PureComponent {
             submit={data => this.addIdeal(data)}
             delete={id => this.removeIdeal(id)}
           />
-        </Row>
-        <Row type="flex" gutter={[16, 16]}>
           <PersonalityColumn
             title="Bond"
             data={this.state.bonds}
             submit={data => this.addBond(data)}
             delete={id => this.removeBond(id)}
           />
-
           <PersonalityColumn
             title="Flaw"
             data={this.state.flaws}

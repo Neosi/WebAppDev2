@@ -20,14 +20,18 @@ def add_character():
     flaws = request.json.get('flaws')
     character = Character(
         name=name, age=age, character_class=character_class, race=race, background=background)
-    for t in traits:
-        character.traits.add(Trait[t])
-    for i in ideals:
-        character.ideals.add(Ideal[i])
-    for b in bonds:
-        character.bonds.add(Bond[b])
-    for f in flaws:
-        character.flaws.add(Flaw[f])
+    if traits is not None:
+        for t in traits:
+            character.traits.add(Trait[t])
+    if ideals is not None:
+        for i in ideals:
+            character.ideals.add(Ideal[i])
+    if bonds is not None:
+        for b in bonds:
+            character.bonds.add(Bond[b])
+    if flaws is not None:
+        for f in flaws:
+            character.flaws.add(Flaw[f])
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 
@@ -56,6 +60,15 @@ def get_characters():
             r["race"] = r["race"].name
         if r["character_class"] is not None:
             r["character_class"] = r["character_class"].name
+        if r["traits"] is not None:
+            r["traits"] = [t.to_dict() for t in r["traits"]]
+        if r["ideals"] is not None:
+            r["ideals"] = [t.to_dict() for t in r["ideals"]]
+        if r["bonds"] is not None:
+            r["bonds"] = [t.to_dict() for t in r["bonds"]]
+        if r["flaws"] is not None:
+            r["flaws"] = [t.to_dict() for t in r["flaws"]]    
+    print(r)
     return json.dumps(result)
 
 
