@@ -74,11 +74,21 @@ def get_characters():
 @app.route('/get-character', methods=['POST'])
 def get_character():
     id = request.json.get('id')
-    temp = Character[id].to_dict(with_collections=False, related_objects=True)
-    temp["race"] = temp["race"].to_dict()
-    temp["character_class"] = temp["character_class"].to_dict()
-    print("DATA: " + str(temp))
-    return json.dumps(temp)
+    character = Character[id].to_dict(with_collections=True, related_objects=True)
+    if character["race"] is not None:
+            character["race"] = character["race"].name
+    if character["character_class"] is not None:
+        character["character_class"] = character["character_class"].name
+    if character["traits"] is not None:
+            character["traits"] = [t.to_dict() for t in character["traits"]]
+    if character["ideals"] is not None:
+        character["ideals"] = [t.to_dict() for t in character["ideals"]]
+    if character["bonds"] is not None:
+        character["bonds"] = [t.to_dict() for t in character["bonds"]]
+    if character["flaws"] is not None:
+        character["flaws"] = [t.to_dict() for t in character["flaws"]]
+    print("DATA: " + str(character))
+    return json.dumps(character)
 
 # ------------------------------------------
 # Race Routes

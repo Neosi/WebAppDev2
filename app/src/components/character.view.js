@@ -10,9 +10,9 @@ export default class CharacterView extends React.PureComponent {
     super(props);
     this.state = {
       id: window.location.pathname.slice(11),
-      character: {},
-      race: {},
-      class: {},
+      character: [],
+      race: [],
+      class: [],
     };
   }
 
@@ -22,7 +22,7 @@ export default class CharacterView extends React.PureComponent {
 
   componentDidMount() {
     getCharacter(this.state.id).then(data => {
-      console.log(data.character_class.name);
+      console.log(data.race)
       this.setState({
         character: data,
         race: data.race,
@@ -30,6 +30,7 @@ export default class CharacterView extends React.PureComponent {
         alignment: data.alignment,
         background: data.background
       });
+      console.log(this.state.race)
     });
   }
 
@@ -44,7 +45,7 @@ export default class CharacterView extends React.PureComponent {
         <Row>
           <Col span={10} style={{ textAlign: "left" }}>
             <Text type="secondary">
-              {this.state.race.name}
+              {this.state.race}
               <Divider type={"vertical"} />
               Alignment: {this.state.alignment}
             </Text>
@@ -54,7 +55,7 @@ export default class CharacterView extends React.PureComponent {
           </Col>
           <Col span={14}>
             <Row>
-              <Text type="secondary">Class: {this.state.class.name}</Text>
+              <Text type="secondary">Class: {this.state.class}</Text>
             </Row>
             <Row>
               <Text type="secondary">Age: {this.state.character.age}</Text>
