@@ -20,7 +20,7 @@ export const PersonalitySection = props => {
         </Col>
       </Row>
       {props.data.map(c => (
-        <Paragraph>{c.description}</Paragraph>
+        <Paragraph key={c.id}>{c.description}</Paragraph>
       ))}
     </div>
   );

@@ -66,25 +66,18 @@ class Builder extends React.PureComponent {
     data.preventDefault();
     let tlist = [];
     this.state.traits.map(t => {
-      console.log("TRAIT" + t.id);
       tlist.push(t.id);
     });
     let ilist = [];
     this.state.ideals.map(t => {
-      console.log("Ideal" + t.id);
-
       ilist.push(t.id);
     });
     let blist = [];
     this.state.bonds.map(t => {
-      console.log("BOND" + t.id);
-
       blist.push(t.id);
     });
     let flist = [];
     this.state.flaws.map(t => {
-      console.log("FLAW" + t.id);
-
       flist.push(t.id);
     });
     this.props.form.setFieldsValue({
@@ -95,13 +88,10 @@ class Builder extends React.PureComponent {
       bonds: blist,
       flaws: flist
     });
-    console.log(tlist);
 
-    console.log(this.props.form.getFieldsValue());
     this.props.form.validateFields((err, values) => {
       if (!err) {
         createCharacter(values);
-        console.log("Received values of form: ", values);
       }
     });
     this.props.form.resetFields();
@@ -215,7 +205,11 @@ class Builder extends React.PureComponent {
                 </Form.Item>
                 <Divider>race choices</Divider>
                 {this.state.races.map(r => (
-                  <ColorTag name={r.name} function={() => this.handleRaceChange(r)}/>
+                  <ColorTag
+                    key={r.id}
+                    name={r.name}
+                    function={() => this.handleRaceChange(r)}
+                  />
                 ))}
               </Col>
               <Col span={12}>
@@ -244,7 +238,11 @@ class Builder extends React.PureComponent {
                 </Form.Item>
                 <Divider>class choices</Divider>
                 {this.state.classes.map(r => (
-                  <ColorTag name={r.name} function={() => this.handleClassChange(r)}/>
+                  <ColorTag
+                    key={r.id}
+                    name={r.name}
+                    function={() => this.handleClassChange(r)}
+                  />
                 ))}
               </Col>
             </Row>
@@ -263,25 +261,25 @@ class Builder extends React.PureComponent {
               refresh={() => this.refreshTraits()}
               data={this.state.traits}
             />
-            {getFieldDecorator("traits")}
+            {getFieldDecorator("traits")(<p></p>)}
             <PersonalitySection
               title="Ideals"
               refresh={() => this.refreshIdeals()}
               data={this.state.ideals}
             />
-            {getFieldDecorator("ideals")}
+            {getFieldDecorator("ideals")(<p></p>)}
             <PersonalitySection
               title="Bonds"
               refresh={() => this.refreshBonds()}
               data={this.state.bonds}
             />
-            {getFieldDecorator("bonds")}
+            {getFieldDecorator("bonds")(<p></p>)}
             <PersonalitySection
               title="Flaws"
               refresh={() => this.refreshFlaws()}
               data={this.state.flaws}
             />
-            {getFieldDecorator("flaws")}
+            {getFieldDecorator("flaws")(<p></p>)}
             <Title level={3}>Tags</Title>
           </Col>
         </Row>
@@ -314,19 +312,16 @@ function randomColour() {
   return string[Math.floor(Math.random() * string.length)];
 }
 
-class ColorTag extends React.PureComponent{
-  constructor(props){
+class ColorTag extends React.PureComponent {
+  constructor(props) {
     super(props);
-    this.state={color: randomColour()}
+    this.state = { color: randomColour() };
   }
-  render(){
-    return(
-      <Tag
-      color={this.state.color}
-      onClick={() => this.props.function()}
-    >
-      {this.props.name}
-    </Tag>
+  render() {
+    return (
+      <Tag color={this.state.color} onClick={() => this.props.function()}>
+        {this.props.name}
+      </Tag>
     );
   }
 }
