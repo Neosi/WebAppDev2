@@ -41,6 +41,7 @@ def update_character():
     id = request.json.get('id')
     char = Character[id]
     char.background = request.json.get('background')
+    char.name = request.json.get('name')
     return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
 
 

@@ -25,9 +25,7 @@ export default class CharacterView extends React.PureComponent {
     getCharacter(this.state.id).then(data => {
       this.setState({
         character: data,
-        race: data.race,
-        class: data.character_class,
-        alignment: data.alignment,
+        name: data.name,
         background: data.background,
         traits: data.traits,
         ideals: data.ideals,
@@ -35,6 +33,11 @@ export default class CharacterView extends React.PureComponent {
         flaws: data.flaws
       });
     });
+  }
+
+  changeName = str=>{
+    this.state.character.name = str;
+    this.setState({ name: str });
   }
 
   onChange = str => {
@@ -55,12 +58,18 @@ export default class CharacterView extends React.PureComponent {
             style={{ textAlign: "left" }}
           >
             <Text type="secondary">
-              {this.state.race + " "}{this.state.class}
+              {this.state.character.race + " "}
+              {this.state.character.character_class}
               <Divider type={"vertical"} />
-              {this.state.alignment}
+              {this.state.character.alignment}
+              <Divider type={"vertical"} />
+              {this.state.character.age} Years Old
             </Text>
-            <Title style={{ marginTop: "0" }}>
-              {this.state.character.name}({this.state.character.age})
+            <Title
+              editable={{ onChange: this.changeName }}
+              style={{ marginTop: "0" }}
+            >
+              {this.state.character.name}
             </Title>
             <Title level={3}>Background</Title>
             <Paragraph
@@ -75,21 +84,25 @@ export default class CharacterView extends React.PureComponent {
               <MinTable title="Trait" data={this.state.traits} />
               <Divider />
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>              <MinTable title="Ideal" data={this.state.ideals} />
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              {" "}
+              <MinTable title="Ideal" data={this.state.ideals} />
               <Divider />
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>              <MinTable title="Bond" data={this.state.bonds} />
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              {" "}
+              <MinTable title="Bond" data={this.state.bonds} />
               <Divider />
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12}>              <MinTable title="Flaw" data={this.state.flaws} />
+            <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+              {" "}
+              <MinTable title="Flaw" data={this.state.flaws} />
               <Divider />
             </Col>
           </Col>
         </Row>
         <Row>
-          <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-            
-          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={12}></Col>
         </Row>
       </div>
     );

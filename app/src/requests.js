@@ -14,6 +14,7 @@ export async function createCharacter(data) {
 }
 
 export function updateCharacter(data) {
+  console.log(data);
   return axios.post(`${url}/update-character`, data);
 }
 

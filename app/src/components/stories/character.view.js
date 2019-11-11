@@ -8,6 +8,6 @@ export const MinTable = props => {
     { title: props.title, dataIndex: "description", key: "description" }
   ];
   return (
-    <Table size="small" columns={columns} pagination={false} dataSource={props.data}></Table>
+    <Table rowKey="id" size="small" columns={columns} pagination={false} dataSource={props.data}></Table>
   );
 };
