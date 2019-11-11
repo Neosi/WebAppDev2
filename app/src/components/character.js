@@ -142,7 +142,7 @@ class CharacterTable extends React.PureComponent {
               okText="Yes"
               cancelText="No"
             >
-              Delete
+              <a>Delete</a>
             </Popconfirm>
           </span>
         )
