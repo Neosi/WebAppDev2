@@ -116,16 +116,3 @@ export default class Personality extends React.PureComponent {
     );
   }
 }
-
-const columns = [
-  {
-    title: "Id",
-    dataIndex: "id",
-    key: "id"
-  },
-  {
-    title: "Description",
-    dataIndex: "description",
-    key: "description"
-  }
-];

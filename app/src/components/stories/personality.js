@@ -11,7 +11,7 @@ import {
 
 export default { title: "Personality" };
 
-const { TextArea, Group } = Input;
+const { TextArea } = Input;
 const { Title } = Typography;
 
 export const PersonalityColumn = props => {

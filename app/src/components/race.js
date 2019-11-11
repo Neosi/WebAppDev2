@@ -1,5 +1,14 @@
 import React from "react";
-import { Table, Divider, Icon, Form, Input, Button } from "antd";
+import {
+  Table,
+  Divider,
+  Icon,
+  Form,
+  Input,
+  Button,
+  Popconfirm,
+  message
+} from "antd";
 import { removeRace, createRace, getRaces } from "../requests";
 
 export default class RacePage extends React.PureComponent {
@@ -13,16 +22,16 @@ export default class RacePage extends React.PureComponent {
   }
 
   init() {
-    getRaces().then(data =>{
-      this.setState({ races: data});
+    getRaces().then(data => {
+      this.setState({ races: data });
     });
   }
 
-  async add(name){
+  async add(name) {
     await createRace(name);
     this.init();
   }
-  async remove(id){
+  async remove(id) {
     await removeRace(id);
     this.init();
   }
@@ -30,17 +39,20 @@ export default class RacePage extends React.PureComponent {
   render() {
     return (
       <div>
-        <WrappedRaceForm create={(name) => this.add(name)} />
+        <WrappedRaceForm create={name => this.add(name)} />
         <RaceTable
           races={this.state.races}
           hasData={this.state.hasData}
-          remove={(id) => this.remove(id)}
+          remove={id => this.remove(id)}
         ></RaceTable>
       </div>
     );
   }
 }
-
+function cancel(e) {
+  console.log(e);
+  message.error("Cancelled");
+}
 class RaceTable extends React.PureComponent {
   render() {
     const columns = [
@@ -57,11 +69,17 @@ class RaceTable extends React.PureComponent {
           <span>
             <a>View</a>
             <Divider type="vertical" />
-            <a onClick={() => this.props.remove(record.id)}>Delete</a>
+            <Popconfirm
+              title="Are you sure delete this race?"
+              onConfirm={() => this.props.remove(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <a>Delete</a>
+            </Popconfirm>
+
             <Divider type="vertical" />
-            <a className="ant-dropdown-link">
-              More actions <Icon type="down" />
-            </a>
           </span>
         )
       }

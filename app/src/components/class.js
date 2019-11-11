@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Divider, Icon, Form, Input, Button } from "antd";
+import { Table, Divider, Icon, Form, Input, Button, message, Popconfirm } from "antd";
 import { removeClass, createClass, getClasses } from "../requests";
 
 export default class ClassPage extends React.PureComponent {
@@ -40,7 +40,10 @@ export default class ClassPage extends React.PureComponent {
     );
   }
 }
-
+function cancel(e) {
+  console.log(e);
+  message.error("Cancelled");
+}
 class ClassTable extends React.PureComponent {
   render() {
     const columns = [
@@ -57,11 +60,14 @@ class ClassTable extends React.PureComponent {
           <span>
             <a>View</a>
             <Divider type="vertical" />
-            <a onClick={() => this.props.remove(record.id)}>Delete</a>
+            <Popconfirm
+              title="Are you sure delete this race?"
+              onConfirm={() => this.props.remove(record.id)}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            ><a>Delete</a></Popconfirm>
             <Divider type="vertical" />
-            <a className="ant-dropdown-link">
-              More actions <Icon type="down" />
-            </a>
           </span>
         )
       }
