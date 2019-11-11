@@ -1,8 +1,6 @@
 import React from "react";
 import { Table } from "antd";
 
-export default { title: "Character View" };
-
 export const MinTable = props => {
   let columns = [
     { title: props.title, dataIndex: "description", key: "description" }

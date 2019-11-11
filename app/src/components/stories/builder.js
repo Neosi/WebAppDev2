@@ -1,10 +1,9 @@
 import React from "react";
 import { Row, Col, Typography, Icon, Select, Input } from "antd";
+import { storiesOf } from '@storybook/react';
 
 const { Title, Paragraph } = Typography;
 const { Option } = Select;
-
-export default { title: "Builder" };
 
 export const PersonalitySection = props => {
   return (
@@ -26,17 +25,3 @@ export const PersonalitySection = props => {
   );
 };
 
-export const NameSelector = props => {
-  return (
-    <Select
-      showSearch
-      filterOption={(input, option) =>
-        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-      }
-    >
-      {props.data.map(c => (
-        <Option key={c.id}>{c.name}</Option>
-      ))}
-    </Select>
-  );
-};
