@@ -13,13 +13,14 @@ def add_character():
     age = request.json.get('age')
     character_class = request.json.get('character_class')
     race = request.json.get('race')
+    alignment = request.json.get('alignment')
     background = request.json.get('background')
     traits = request.json.get('traits')
     ideals = request.json.get('ideals')
     bonds = request.json.get('bonds')
     flaws = request.json.get('flaws')
     character = Character(
-        name=name, age=age, character_class=character_class, race=race, background=background)
+        name=name, age=age, character_class=character_class, race=race, background=background, alignment=alignment)
     if traits is not None:
         for t in traits:
             character.traits.add(Trait[t])
@@ -58,6 +59,8 @@ def get_characters():
     for r in result:
         if r["race"] is not None:
             r["race"] = r["race"].name
+        if r["alignment"] is not None:
+            r["alignment"] = r["alignment"].name
         if r["character_class"] is not None:
             r["character_class"] = r["character_class"].name
         if r["traits"] is not None:
@@ -79,6 +82,8 @@ def get_character():
             character["race"] = character["race"].name
     if character["character_class"] is not None:
         character["character_class"] = character["character_class"].name
+    if character["alignment"] is not None:
+        character["alignment"] = character["alignment"].name
     if character["traits"] is not None:
             character["traits"] = [t.to_dict() for t in character["traits"]]
     if character["ideals"] is not None:
