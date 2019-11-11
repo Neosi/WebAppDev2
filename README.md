@@ -4,7 +4,7 @@ Name: Max Larkin
 
 ## Overview.
 
-An application made to create and store characters and their backgrounds quickly and efficiently. Characters are for use in tabletop RPG systems and the template is based upon Dungeons & Dragons 5e.
+An application made to create and store characters and their backgrounds quickly and efficiently. Characters are for use in tabletop RPG systems and the template is based upon Dungeons & Dragons 5e. It is built on a Nodejs frontend and a Python backend.
 
 ### Current Features
 
@@ -13,17 +13,12 @@ An application made to create and store characters and their backgrounds quickly
 - Randomization options
 - Extensible list of character options
 
-### Upcoming Features
-
-- Sorting options
-- Group actions
-
 ## Setup.
 
 ### Dependancies
 ```
 Python3
-Node
+Node.js
 ```
 ### Setting up a virtual environment
 From within /webappdev2 run:
@@ -32,15 +27,20 @@ python3 -m venv venv
 ```
 
 ### Activating the virtual python environment
-Activate the virtual environment by navigating to the subdirectory containing the 'activate' script within your terminal.
+To launch the python backend or install its requirements, the virtual environment will need to be activated. Activate the virtual environment by navigating to the subdirectory containing the 'activate' script within your terminal.
 
 This is usually found under /venv/Scripts on Windows or /venv/bin on Mac/Linux.
 
-Once activated return to the root directory and run the following:
+### Package requirements
+
+For the front end the requirements should be installed from WebDevApp2/app/:
+```
+npm i
+```
+For the back end the requirements should be installed while the venv has been activated from WebDevApp2/ via:
 ```
 pip install -r requirements.txt
-cd app
-npm i
+
 ```
 ### Launching the app
 Launching the app will require two terminals to launch both the front end and the back end.
@@ -63,21 +63,35 @@ The model is based around the character table which is the crux of the applicati
 
 ## UI Design.
 
-. . . . . Screenshots of the app's views with brief statements of their use (see examples below) . . . . . . .
+![][builder] 
 
-![][main]
+>> This page allows characters to be created accessing all of the options available to it and randomly assigning personality options to them which may be refreshed.
 
->> Shows a card for each contact in the datastore. This contact list can be filtered by name and gender. A contact can be edited or deleted a contact. 
+![][characters]
 
-![][detail]
+>> This page shows all characters in the database in table form.
 
->> . . . bla bla bla . . . . . 
+![][view]
+
+>> This page shows a view of a specific character and their information.
+
+![][races]
+
+>> This page shows all races in the database in table form.
+
+![][classes]
+
+>> This page shows all classes in the database in table form.
+
+![][personality]
+
+>> This page shows all personality options in the database in table form.
+
 
 ## Routing.
 
 All routes are public for now.
 
-- / - Home page.
 - /builder - Main character building page.
 - /characters - Displays list of all created characters.
 - /character/:id - Detailed view of a specific character.
@@ -87,11 +101,7 @@ All routes are public for now.
 
 ## Storybook.
 
-. . . . . Include a screenshot of the fully expanded list of stories from the tool's UI (see below). Group the stories appropriately (e.g. Contact page group) . . . .
-
-![][stories]
-
-. . . . (Optional) State any non-standard Storybook add-ons used and include a screenshot(s) to illustrate.
+![][storybook]
 
 ## Backend.
 
@@ -100,7 +110,13 @@ The backend is built in Python in a simple flask application using the Object Re
 
 ## Independent learning.
 
-. . . . . State any non-standard aspects of React or other related technologies that you researched and applied in this assignment, other than those covered by the two previous sections . . . . .
+Used many instances of props, state and component lifecycle to create reactive components.
 
 [model]: ./images/DataModel.PNG
-
+[builder]: ./images/builder.PNG
+[characters]: ./images/characters.PNG
+[races]: ./images/races.PNG
+[classes]: ./images/classes.PNG
+[personality]: ./images/personality.PNG
+[view]: ./images/view.PNG
+[storybook]: ./images/storybook.PNG
