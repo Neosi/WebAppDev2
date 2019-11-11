@@ -45,7 +45,7 @@ npm i
 ### Launching the app
 Launching the app will require two terminals to launch both the front end and the back end.
 
-Launch the server side from WebAppDev2/
+Launch the server side from WebAppDev2/ with the venv activated.
 ```
 python run.py
 ```
@@ -57,15 +57,10 @@ This will launch the app into a development environment.
 
 ## Data Model Design.
 
-. . . . . A diagram of app's data model (see example below) AND/OR a sample of the test data used (JSON or equivalent).
-
 ![][model]
 
-. . . Briefly explain any non-trivial aspects of the model . . . . .
+The model is based around the character table which is the crux of the application. A character has entirely optional relationships with other entities in either one-to-many relationships or using a common many-to-many solution with composite keys.
 
-~~~
-place code snippets, e.g. JSON, inside these fence delimiters and they will appear in a block-like structure.
-~~~
 ## UI Design.
 
 . . . . . Screenshots of the app's views with brief statements of their use (see examples below) . . . . . . .
@@ -107,8 +102,5 @@ The backend is built in Python in a simple flask application using the Object Re
 
 . . . . . State any non-standard aspects of React or other related technologies that you researched and applied in this assignment, other than those covered by the two previous sections . . . . .
 
-[model]: ./img/DataModel.PNG
-[main]: ./img/main.png
-[detail]: ./img/detail.png
-[stories]: ./img/stories.png
+[model]: ./images/DataModel.PNG
 
