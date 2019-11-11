@@ -66,24 +66,24 @@ class Builder extends React.PureComponent {
     data.preventDefault();
     let tlist = [];
     this.state.traits.map(t => {
-      console.log("TRAIT" + t.id)
+      console.log("TRAIT" + t.id);
       tlist.push(t.id);
     });
     let ilist = [];
     this.state.ideals.map(t => {
-      console.log("Ideal" + t.id)
+      console.log("Ideal" + t.id);
 
       ilist.push(t.id);
     });
     let blist = [];
     this.state.bonds.map(t => {
-      console.log("BOND" + t.id)
+      console.log("BOND" + t.id);
 
       blist.push(t.id);
     });
     let flist = [];
     this.state.flaws.map(t => {
-      console.log("FLAW" + t.id)
+      console.log("FLAW" + t.id);
 
       flist.push(t.id);
     });
@@ -95,7 +95,7 @@ class Builder extends React.PureComponent {
       bonds: blist,
       flaws: flist
     });
-    console.log(tlist)
+    console.log(tlist);
 
     console.log(this.props.form.getFieldsValue());
     this.props.form.validateFields((err, values) => {
@@ -203,16 +203,19 @@ class Builder extends React.PureComponent {
                       }
                     >
                       {this.state.races.map(c => (
-                        <Option onClick={() => this.handleRaceChange(c)} key={c.id}>{c.name}</Option>
+                        <Option
+                          onClick={() => this.handleRaceChange(c)}
+                          key={c.id}
+                        >
+                          {c.name}
+                        </Option>
                       ))}
                     </Select>
                   )}
                 </Form.Item>
                 <Divider>race choices</Divider>
                 {this.state.races.map(r => (
-                  <Tag color={randomColour()} onClick={() => this.handleRaceChange(r)}>
-                    {r.name}
-                  </Tag>
+                  <ColorTag name={r.name} function={() => this.handleRaceChange(r)}/>
                 ))}
               </Col>
               <Col span={12}>
@@ -229,16 +232,19 @@ class Builder extends React.PureComponent {
                       }
                     >
                       {this.state.classes.map(c => (
-                        <Option onClick={() => this.handleClassChange(c)} key={c.id}>{c.name}</Option>
+                        <Option
+                          onClick={() => this.handleClassChange(c)}
+                          key={c.id}
+                        >
+                          {c.name}
+                        </Option>
                       ))}
                     </Select>
                   )}
                 </Form.Item>
                 <Divider>class choices</Divider>
                 {this.state.classes.map(r => (
-                  <Tag color={randomColour()} onClick={() => this.handleClassChange(r)}>
-                    {r.name}
-                  </Tag>
+                  <ColorTag name={r.name} function={() => this.handleClassChange(r)}/>
                 ))}
               </Col>
             </Row>
@@ -246,9 +252,7 @@ class Builder extends React.PureComponent {
             <Row>
               <Title level={3}>Background</Title>
               <Form.Item>
-                {getFieldDecorator("background")(
-                  <TextArea />
-                )}
+                {getFieldDecorator("background")(<TextArea />)}
               </Form.Item>
             </Row>
           </Col>
@@ -306,6 +310,23 @@ function randomColour() {
     "gold",
     "purple",
     "cyan"
-  ]
+  ];
   return string[Math.floor(Math.random() * string.length)];
+}
+
+class ColorTag extends React.PureComponent{
+  constructor(props){
+    super(props);
+    this.state={color: randomColour()}
+  }
+  render(){
+    return(
+      <Tag
+      color={this.state.color}
+      onClick={() => this.props.function()}
+    >
+      {this.props.name}
+    </Tag>
+    );
+  }
 }
