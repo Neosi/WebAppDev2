@@ -119,4 +119,4 @@ Used many instances of props, state and component lifecycle to create reactive c
 [classes]: ./images/classes.PNG
 [personality]: ./images/personality.PNG
 [view]: ./images/view.PNG
-[storybook]: ./images/storybook.PNG
+[storybook]: ./images/Storybook.PNG
