@@ -107,7 +107,7 @@ The backend is built in Python in a simple flask application using the Object Re
 
 . . . . . State any non-standard aspects of React or other related technologies that you researched and applied in this assignment, other than those covered by the two previous sections . . . . .
 
-[model]: ./img/model.png
+[model]: ./img/DataModel.PNG
 [main]: ./img/main.png
 [detail]: ./img/detail.png
 [stories]: ./img/stories.png
