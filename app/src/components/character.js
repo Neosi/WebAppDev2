@@ -167,31 +167,11 @@ class CharacterTable extends React.PureComponent {
               <Col>
                 <Text ellipsis>Age: {record.age}</Text>
                 <Divider type="vertical" />
-                <Text ellipsis>Allignment: {record.allignment}</Text>
+                <Text ellipsis>Allignment: {record.alignment}</Text>
                 <Divider type="vertical" />
-                <Text ellipsis>Background:{record.background}</Text>
-                <Divider type="vertical" />
-                <Text ellipsis>Appearance: {record.appearance}</Text>
+                <Text ellipsis>Background: {record.background}</Text>
               </Col>
             </Row>
-            <Row>
-
-            </Row>
-            <Row>
-              <Col>
-                <Tag>
-                  Tag
-                </Tag>
-                <Tag>
-                  Tag
-                </Tag>
-                <Tag>
-                  Tag
-                </Tag>
-              </Col>
-
-            </Row>
-
           </div>
         )}
       />
